@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeNews from './Components/HomeNews'; 
+import HomeNews from './Components/HomeNews/HomeNews.jsx'; 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -12,4 +12,4 @@ function App() {
   )
 }
 
-export default App();
+export default App;
