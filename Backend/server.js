@@ -1,36 +1,38 @@
 // server.js
 import dotenv from 'dotenv';
 import express from 'express';
-// import mongoose from 'mongoose'; // Keep commented if not using DB yet
+import mongoose from 'mongoose'; // <-- UNCOMMENT this
 import cors from 'cors';
-import HomeNewsRoutes from "../Backend/Routes/HomeNewsRoutes.js";
+import HomeNewsRoutes from "./routes/HomeNewsRoutes.js";
+import authRoutes from './routes/authRoutes.js'; // <-- IMPORT Auth Routes
+
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-// const MONGODB_URI = process.env.MONGODB_URI; // Keep commented
+const MONGODB_URI = process.env.MONGODB_URI; // <-- UNCOMMENT this
 
 // --- Middleware ---
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // Keep this for parsing JSON bodies from React
 
-// Logging middleware
+// Logging middleware (keep your existing one)
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 });
 
 // --- Routes ---
-// Mount the imported router
-app.use('/api/news', HomeNewsRoutes); // Use the imported newsRoutes
+app.use('/api/news', HomeNewsRoutes); // Keep your existing news routes
+app.use('/api/auth', authRoutes);     // <-- ADD the authentication routes
 
-// Basic root route
+// Basic root route (keep existing)
 app.get('/', (req, res) => {
   res.send('News Platform Backend (ESM) is running!');
 });
 
-// --- Database Connection (Commented Out) ---
-/*
+// --- Database Connection ---
+// UNCOMMENT and use this block (it includes better error handling)
 if (!MONGODB_URI) {
   console.error('FATAL ERROR: MONGODB_URI is not defined in .env file.');
   process.exit(1);
@@ -40,11 +42,13 @@ console.log('Attempting to connect to MongoDB...');
 mongoose.connect(MONGODB_URI)
   .then(() => {
     console.log('Successfully connected to MongoDB.');
-    // Start the server only after successful DB connection (if uncommented)
-    // app.listen(PORT, () => {
-    //   console.log(`🚀 Server listening on port ${PORT}`);
-    //   console.log(`API endpoints available at http://localhost:${PORT}/api/news`);
-    // });
+    // Start the server only after successful DB connection
+    app.listen(PORT, () => { // <-- MOVE app.listen HERE
+      console.log(`🚀 Server listening on port ${PORT}`);
+      console.log(`API endpoints available at:`);
+      console.log(`   - News: http://localhost:${PORT}/api/news`);
+      console.log(`   - Auth: http://localhost:${PORT}/api/auth`);
+    });
   })
   .catch((err) => {
     console.error('❌ Error connecting to MongoDB:', err.message);
@@ -57,11 +61,14 @@ mongoose.connection.on('error', err => {
 mongoose.connection.on('disconnected', () => {
   console.warn('MongoDB disconnected.');
 });
-*/
+// --- End Database Connection ---
 
-// --- Start Server (since DB connection is commented out) ---
-// If you are not waiting for the DB, you can start listening directly.
+
+// --- Start Server (Commented Out/Removed) ---
+/*
+// REMOVE this section, as app.listen is now inside the mongoose.connect().then() block
 app.listen(PORT, () => {
     console.log(`🚀 Server listening on port ${PORT}`);
     console.log(`API endpoints available at http://localhost:${PORT}/api/news`);
 });
+*/

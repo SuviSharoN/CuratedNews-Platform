@@ -3,7 +3,7 @@ import axios from 'axios';
 import './HomeNews.css'; // **** IMPORT THE CSS FILE ****
 
 // Placeholder image if article.urlToImage is null or invalid
-const placeholderImage = "https://via.placeholder.com/300x160?text=No+Image"; // Adjusted placeholder size
+const placeholderImage = "https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=mZ2wtnhxBA20wCs2sNhAClC-hSFOkqAJAP3GqiSBIlk="; // Adjusted placeholder size
 
 function HomeNews() {
   const [articles, setArticles] = useState([]);
