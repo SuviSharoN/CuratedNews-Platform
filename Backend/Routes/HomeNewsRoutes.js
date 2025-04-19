@@ -22,7 +22,7 @@ router.get('/top-headlines', async (req, res) => {
       params: {
         country: req.query.country || 'us', // Default to 'us'
         category: req.query.category,     // Allow filtering (e.g., 'business', 'technology')
-        pageSize: req.query.pageSize || 10, // Reduce default size to conserve API calls during test
+        pageSize: req.query.pageSize || 40, // Reduce default size to conserve API calls during test
         page: req.query.page || 1,
       },
       headers: {

@@ -1,0 +1,77 @@
+.auth-container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 2rem;
+    background-color: #f8f8f8; /* Salt */
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.07);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .auth-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #2c2c2c; /* Pepper */
+  }
+  
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  .form-group input:focus {
+    border-color: #555;
+    outline: none;
+  }
+  
+  button[type='submit'] {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #2c2c2c; /* Pepper */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  button[type='submit']:hover {
+    background-color: #1a1a1a;
+  }
+  
+  button[disabled] {
+    background-color: #999;
+    cursor: not-allowed;
+  }
+  
+  .message {
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  .message.success {
+    color: #1d8f00; /* greenish success */
+  }
+  
+  .message.error {
+    color: #c1121f; /* soft red for errors */
+  }
+  

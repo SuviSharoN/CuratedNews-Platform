@@ -1,0 +1,90 @@
+/* frontend/src/components/Navbar.css */
+
+/* === Professional Navbar Styles === */
+
+.main-navbar {
+    background-color: #ffffff; /* Clean white background */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+    padding: 0.8rem 0; /* Vertical padding */
+    position: sticky; /* Keep it sticky at the top */
+    top: 0;
+    z-index: 1000; /* Ensure it stays above other content */
+    width: 100%;
+  }
+  
+  .navbar-content {
+    display: flex;
+    justify-content: space-between; /* Space brand and links */
+    align-items: center;
+    max-width: 1200px; /* Max width of content inside navbar */
+    margin: 0 auto; /* Center the content */
+    padding: 0 1.5rem; /* Horizontal padding for content */
+  }
+  
+  /* Brand/Logo Styling */
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #343a40; /* Dark Gray */
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .navbar-brand:hover {
+    color: #0d6efd; /* Example hover color - Blue */
+  }
+  
+  /* Navigation Links List */
+  .navbar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Spacing between links */
+  }
+  
+  /* Individual Link Styling */
+  .nav-link {
+    color: #495057; /* Medium Gray */
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 0.2rem; /* Padding for hover/active area */
+    position: relative; /* For underline effect */
+    transition: color 0.2s ease;
+  }
+  
+  /* Underline Effect on Hover */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #0d6efd; /* Blue underline color */
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  
+  .nav-link:hover {
+    color: #0d6efd; /* Blue on hover */
+  }
+  
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  
+  /* Active Link Styling (Applied by NavLink) */
+  .nav-link.active {
+    color: #0d6efd; /* Active link color */
+    font-weight: 600;
+  }
+  .nav-link.active::after {
+     transform: scaleX(1); /* Keep underline visible */
+     background-color: #0d6efd;
+     transform-origin: bottom center; /* Center origin */
+  }

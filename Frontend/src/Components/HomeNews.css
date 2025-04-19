@@ -224,3 +224,24 @@ body {
   .news-footer a:hover {
       color: #93c5fd; /* hover:text-blue-300 */
   }
+  /* Style for the like button when it's active */
+.like-button.liked-active {
+  background-color: #dc2626; /* Example: Red background for liked */
+  color: #fef2f2; /* Lighter text */
+}
+
+.like-button.liked-active:hover:not(:disabled) {
+   background-color: #b91c1c; /* Darker red on hover */
+}
+
+/* Optional: Style the SVG icon itself when active */
+.like-button.liked-active .like-icon {
+  fill: #fee2e2; /* Example: Lighter color for the icon fill */
+  /* Or use stroke if your SVG uses stroke */
+}
+
+/* Style for disabled button when not logged in */
+.like-button:disabled[title]:not([title=""]) { /* Target specifically the one disabled due to login */
+    /* Add specific styles if needed, e.g., slightly different opacity or cursor */
+    cursor: help; /* Indicate tooltip */
+}
