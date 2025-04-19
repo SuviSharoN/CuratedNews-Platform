@@ -3,7 +3,7 @@ import axios from 'axios';
 import './HomeNews.css'; // **** IMPORT THE CSS FILE ****
 
 // Placeholder image if article.urlToImage is null or invalid
-const placeholderImage = "https://via.placeholder.com/300x160?text=No+Image"; // Adjusted placeholder size
+const placeholderImage = "https://placehold.co/300x160?text=No+Image"; // Adjusted placeholder size
 
 function HomeNews() {
   const [articles, setArticles] = useState([]);
@@ -18,6 +18,7 @@ function HomeNews() {
         const response = await axios.get('/api/news/top-headlines');
         if (response.data && Array.isArray(response.data.articles)) {
           setArticles(response.data.articles);
+          console.log(articles.length);
         } else {
           console.error("Unexpected API response structure:", response.data);
           setError("Received unexpected data format from the server.");
