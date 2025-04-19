@@ -6,6 +6,8 @@ import cors from 'cors';
 import HomeNewsRoutes from "./routes/HomeNewsRoutes.js";
 import authRoutes from './Routes/authRoutes.js'; // <-- IMPORT Auth Routes
 import LikeRoutes from './Routes/LikeRoutes.js';
+
+
 dotenv.config();
 
 const app = express();
@@ -26,6 +28,7 @@ app.use((req, res, next) => {
 app.use('/api/news', HomeNewsRoutes); // Keep your existing news routes
 app.use('/api/auth', authRoutes);     // <-- ADD the authentication routes
 app.use('/api/likes',LikeRoutes);
+
 
 // Basic root route (keep existing)
 app.get('/', (req, res) => {
