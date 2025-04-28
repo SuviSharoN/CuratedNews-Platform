@@ -153,10 +153,17 @@ body {
   
   
   .article-actions {
+    /* --- Keep your existing styles --- */
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem; /* space-x-2 */
+  
+    /* --- ADD THESE LINES --- */
+    /* Establish a stacking context and ensure it's above default flow */
+    position: relative; /* Needed for z-index to work reliably */
+    z-index: 10;        /* Give it a positive z-index */
+    /* --- END ADDED LINES --- */
   }
   
   .action-button {
@@ -245,3 +252,291 @@ body {
     /* Add specific styles if needed, e.g., slightly different opacity or cursor */
     cursor: help; /* Indicate tooltip */
 }
+/* ================================================== */
+/* == COMMENT SECTION STYLES - V3 (Enhanced Dark) === */
+/* ================================================== */
+
+/* --- Main Comment Section Container --- */
+.comment-section-inline {
+  /* --- Keep your existing styles --- */
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-top: 1px solid #374151;
+  background-color: #1f2937;
+  border-radius: 0 0 0.75rem 0.75rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  /* --- ADD THIS LINE (Optional but good practice) --- */
+  position: relative; /* Can help contain absolutely positioned children if added later */
+  z-index: 1;         /* Ensure it's below the actions */
+  /* --- END ADDED LINE --- */
+}
+
+.comment-section-inline h4 {
+  margin-top: 0;
+  margin-bottom: 1.25rem; /* mb-5 */
+  font-size: 1.25rem;    /* text-xl */
+  font-weight: 600;      /* font-semibold */
+  color: #e5e7eb;        /* gray-200 - make heading stand out more */
+  letter-spacing: 0.025em; /* Slight letter spacing */
+}
+
+/* --- Comment Input Form --- */
+.comment-form-inline {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.75rem; /* mb-7 */
+}
+
+.comment-form-inline textarea {
+  width: 100%;
+  padding: 0.875rem 1rem; /* py-3.5 px-4 */
+  border: 1px solid #4b5563; /* gray-600 border */
+  border-radius: 0.5rem;  /* rounded-lg */
+  margin-bottom: 0.75rem; /* mb-3 */
+  background-color: #374151; /* gray-700 */
+  color: #f9fafb;        /* gray-50 text (brighter) */
+  font-size: 1em;
+  resize: vertical;
+  min-height: 80px;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.comment-form-inline textarea::placeholder {
+  color: #6b7280;        /* gray-500 */
+}
+.comment-form-inline textarea:focus {
+  outline: none;
+  border-color: #60a5fa; /* blue-400 */
+  background-color: #4b5563; /* gray-600 focus bg */
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25), /* Outer glow */
+              inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.comment-form-inline button[type="submit"] {
+  align-self: flex-end;
+  padding: 0.6rem 1.25rem;
+  /* Brighter Teal for action */
+  background-color: #14b8a6; /* Teal-500 */
+  color: #111827;        /* Dark text on bright button */
+  border: none;
+  border-radius: 0.5rem;   /* rounded-lg */
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;      /* font-semibold */
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* Subtle shadow */
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+.comment-form-inline button[type="submit"]:hover:not(:disabled) {
+  background-color: #0d9488; /* Teal-600 */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Slightly larger shadow */
+  transform: translateY(-1px);
+}
+.comment-form-inline button[type="submit"]:active:not(:disabled) {
+  transform: translateY(0);
+}
+.comment-form-inline button[type="submit"]:disabled {
+  background-color: #4b5563;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+.login-prompt-inline {
+  font-size: 0.9em;
+  color: #9ca3af;        /* gray-400 */
+  text-align: center;
+  margin: 1.5rem 0;      /* my-6 */
+  padding: 0.75rem;
+  background-color: rgba(55, 65, 81, 0.7); /* gray-700/70 bg */
+  border-radius: 0.5rem; /* rounded-lg */
+}
+
+/* --- Comment List --- */
+.comments-list-inline {
+  margin-top: 1rem;      /* mt-4 */
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 0.25rem 0.5rem 0.25rem 0; /* Add padding, space for scrollbar */
+  /* Refined Dark Scrollbar (Webkit) */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #4b5563 #2b3646; /* thumb track (Firefox) */
+}
+.comments-list-inline::-webkit-scrollbar { width: 8px; }
+.comments-list-inline::-webkit-scrollbar-track { background: #273344; border-radius: 4px; } /* Slightly different track */
+.comments-list-inline::-webkit-scrollbar-thumb { background-color: #6b7280; border-radius: 4px; border: 2px solid #273344; }
+.comments-list-inline::-webkit-scrollbar-thumb:hover { background-color: #9ca3af; }
+
+
+.comments-list-inline > p { /* Style for "No comments yet" */
+  text-align: center;
+  color: #6b7280;        /* gray-500 */
+  padding: 2rem 0;       /* py-8 */
+  font-style: italic;
+}
+
+/* --- Individual Comment Item --- */
+.comment-item-inline {
+  /* Use a distinct, slightly lighter background for comment bubbles */
+  background-color: #273344; /* Bluish dark gray - adjust if needed */
+  border: 1px solid #374151; /* gray-700 border */
+  border-radius: 0.625rem; /* Slightly more rounded (10px) */
+  padding: 1rem 1.25rem; /* py-4 px-5 */
+  margin-bottom: 1rem;   /* mb-4 */
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* Slightly more shadow */
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.comment-item-inline:hover {
+  background-color: #313e52; /* Slightly lighter on hover */
+  transform: scale(1.01); /* Subtle scale effect */
+}
+.comment-item-inline:last-child {
+  margin-bottom: 0.25rem; /* Ensure some space at the bottom */
+}
+
+.comment-header-inline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem; /* mb-2 */
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.comment-header-inline strong {
+  color: #c7d2fe;        /* Indigo-200 - pleasant lighter blue/purple */
+  font-weight: 500;      /* font-medium */
+  font-size: 0.95em;
+}
+
+.comment-date-inline {
+  font-size: 0.75rem;    /* text-xs */
+  color: #8b94a3;        /* gray-400/500 range */
+}
+
+.comment-text-inline {
+  margin: 0.25rem 0 0 0;
+  word-wrap: break-word;
+  color: #d1d5db;        /* gray-300 */
+  line-height: 1.6;
+  font-size: 1em;
+}
+
+.comment-delete-btn-inline {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(75, 85, 99, 0.3); /* gray-600/30 bg */
+  border: none;
+  color: #9ca3af;        /* gray-400 */
+  cursor: pointer;
+  font-size: 1.1em;      /* Slightly smaller X */
+  font-weight: bold;
+  padding: 0;
+  line-height: 1;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* Hide initially */
+  transform: scale(0.8);
+  transition: opacity 0.2s ease, color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.comment-item-inline:hover .comment-delete-btn-inline {
+  opacity: 0.8; /* Show on item hover */
+  transform: scale(1);
+}
+.comment-delete-btn-inline:hover {
+  opacity: 1;
+  color: #fca5a5;        /* red-300 */
+  background-color: rgba(185, 28, 28, 0.4); /* red-800/40 */
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+
+/* --- Comment Loading/Error States --- */
+.comment-section-inline .error-message.comment-error {
+  color: #fca5a5;        /* red-300 */
+  background-color: rgba(127, 29, 29, 0.5); /* bg-red-900/50 */
+  border: 1px solid #ef4444; /* red-500 */
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;   /* rounded-lg */
+  margin: 1.5rem 0;      /* my-6 */
+  font-size: 0.9em;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.comment-section-inline .loading-spinner {
+  border: 4px solid #4b5563; /* gray-600 */
+  border-top: 4px solid #60a5fa; /* blue-400 */
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  animation: spin 0.9s linear infinite;
+  margin: 2rem auto; /* my-8 */
+}
+.comment-section-inline .small-spinner {
+   width: 22px; height: 22px; border-width: 3px; margin: 1.25rem auto; /* my-5 */
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* --- Active State for Main Comment Toggle Button --- */
+.comment-toggle-btn.active {
+background-color: #374151; /* gray-700 */
+color: #93c5fd; /* blue-300 text */
+box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+/* ================================= */
+/* == ENHANCED COMMENT TOGGLE BUTTON == */
+/* ================================= */
+
+/* Target the specific comment toggle button */
+.comment-toggle-btn {
+  /* Inherit general action button styles if needed, or redefine */
+  /* Let's give it a distinct but fitting background */
+  background-color: #4b5563; /* gray-600 (Similar to Share) */
+  color: #e5e7eb;       /* gray-200 text */
+  /* Ensure flex properties if not inherited from .action-button */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid transparent; /* Add border for consistency */
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover state for the comment button */
+.comment-toggle-btn:hover {
+  background-color: #6b7280; /* gray-500 */
+  border-color: #778291; /* Subtle border highlight */
+}
+
+/* Active state (when comments are open) */
+.comment-toggle-btn.active {
+  background-color: #374151; /* gray-700 (Darker, inset look) */
+  color: #60a5fa;       /* blue-400 text to indicate activity */
+  border-color: #4b5563; /* gray-600 border */
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.25); /* Inner shadow */
+}
+
+/* Ensure other action buttons retain their styles */
+/* (These should already exist from your previous CSS) */
+.like-button { /* ... existing styles ... */ }
+.share-button { /* ... existing styles ... */ }
+.read-more-button { /* ... existing styles ... */ }
+
+/* Ensure general .action-button styles don't conflict if you redefined them above */
+/* You might only need the specific .comment-toggle-btn styles */
