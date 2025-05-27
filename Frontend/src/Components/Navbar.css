@@ -1,90 +1,102 @@
-/* frontend/src/components/Navbar.css */
-
-/* === Professional Navbar Styles === */
+/* === Professional Navbar Styles with Enhanced Design === */
 
 .main-navbar {
-    background-color: #ffffff; /* Clean white background */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Subtle shadow */
-    padding: 0.8rem 0; /* Vertical padding */
-    position: sticky; /* Keep it sticky at the top */
-    top: 0;
-    z-index: 1000; /* Ensure it stays above other content */
-    width: 100%;
-  }
-  
-  .navbar-content {
-    display: flex;
-    justify-content: space-between; /* Space brand and links */
-    align-items: center;
-    max-width: 1200px; /* Max width of content inside navbar */
-    margin: 0 auto; /* Center the content */
-    padding: 0 1.5rem; /* Horizontal padding for content */
-  }
-  
-  /* Brand/Logo Styling */
-  .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #343a40; /* Dark Gray */
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  
-  .navbar-brand:hover {
-    color: #0d6efd; /* Example hover color - Blue */
-  }
-  
-  /* Navigation Links List */
-  .navbar-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem; /* Spacing between links */
-  }
-  
-  /* Individual Link Styling */
-  .nav-link {
-    color: #495057; /* Medium Gray */
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 0.5rem 0.2rem; /* Padding for hover/active area */
-    position: relative; /* For underline effect */
-    transition: color 0.2s ease;
-  }
-  
-  /* Underline Effect on Hover */
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: #0d6efd; /* Blue underline color */
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-  }
-  
-  .nav-link:hover {
-    color: #0d6efd; /* Blue on hover */
-  }
-  
-  .nav-link:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-  
-  /* Active Link Styling (Applied by NavLink) */
-  .nav-link.active {
-    color: #0d6efd; /* Active link color */
-    font-weight: 600;
-  }
-  .nav-link.active::after {
-     transform: scaleX(1); /* Keep underline visible */
-     background-color: #0d6efd;
-     transform-origin: bottom center; /* Center origin */
-  }
+  background-color: #ffffff; /* Clean white background */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Slightly deeper shadow for a more elegant feel */
+  padding: 1rem 2rem; /* Adjusted padding for a fuller look */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure it stays above other content */
+  width: 100%;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover or scroll */
+}
+
+.main-navbar:hover {
+  background-color: #f8f9fa; /* Subtle background color change on hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Deeper shadow for a more dramatic effect */
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.navbar-brand {
+  font-size: 1.8rem; /* Larger brand size */
+  font-weight: 800; /* Stronger weight for emphasis */
+  color: #343a40; /* Dark Gray */
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar-brand:hover {
+  color: #0d6efd; /* Blue hover color */
+  transform: scale(1.1); /* Slightly scale up the logo on hover */
+}
+
+/* Navigation Links List */
+.navbar-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* Increased gap for a more spacious layout */
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  color: #495057; /* Medium Gray */
+  text-decoration: none;
+  font-size: 1.1rem; /* Slightly larger text */
+  font-weight: 500;
+  padding: 0.8rem 0.4rem; /* Increased padding for a more touch-friendly hover area */
+  position: relative;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Underline Effect on Hover */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 3px;
+  bottom: -2px; /* Slightly lower underline */
+  left: 0;
+  background-color: #0d6efd; /* Blue underline color */
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out, width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #0d6efd; /* Blue text on hover */
+  transform: translateY(-2px); /* Slightly elevate the link on hover */
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+  width: 100%; /* Full width underline */
+}
+
+.nav-link.active {
+  color: #0d6efd; /* Active link color */
+  font-weight: 600;
+}
+
+.nav-link.active::after {
+  transform: scaleX(1); /* Keep the underline visible */
+  background-color: #0d6efd;
+  transform-origin: bottom center; /* Center the underline */
+  width: 100%; /* Ensure the underline spans full width */
+}
+
+/* Optional: Hover Effect on Navbar */
+.main-navbar:hover .navbar-links .nav-link {
+  color: #0d6efd; /* Highlight all links on navbar hover */
+}
+

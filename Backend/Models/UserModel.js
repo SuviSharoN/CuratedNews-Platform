@@ -5,17 +5,45 @@ import bcrypt from 'bcryptjs';
 const userSchema = new mongoose.Schema({
      username: {
         type: String,
-        required: true,
+        required: [true, 'Please provide a username'],
         unique: true,
         trim: true,
         lowercase: true
     },
+    email: {
+        type: String,
+        required: [true, 'Please provide an email'],
+        unique: true,
+        trim: true,
+        lowercase: true,
+        match: [
+            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+            'Please provide a valid email'
+        ]
+    },
      password: {
         type: String,
-        required: true,
-        minlength: 6
+        required: [true, 'Please provide a password'],
+        minlength: 6,
+        select: false
+    },
+    profilePicture: {
+        type: String, // URL or base64
+        default: ''
+    },
+    bio: {
+        type: String,
+        default: ''
+    },
+    interests: {
+        type: [String],
+        default: []
+    },
+    emailOptOut: {
+        type: Boolean,
+        default: false
     }
-    // Add any other fields your user needs (email, name, etc.)
+    // Add any other fields your user needs (name, etc.)
 }, { timestamps: true });
 
 // Hash password before saving

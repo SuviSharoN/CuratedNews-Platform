@@ -3,9 +3,12 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose' // <-- UNCOMMENT this
 import cors from 'cors';
-import HomeNewsRoutes from "./routes/HomeNewsRoutes.js";
+import HomeNewsRoutes from "./Routes/HomeNewsRoutes.js";
 import authRoutes from './Routes/authRoutes.js'; // <-- IMPORT Auth Routes
 import LikeRoutes from './Routes/LikeRoutes.js';
+import TheoryRoutes from './Routes/TheoryRoutes.js';
+import interestsRoutes from './Routes/interestsRoutes.js';
+import pollRoutes from './Routes/pollRoutes.js'; // Import poll routes
 dotenv.config();
 
 const app = express();
@@ -26,6 +29,9 @@ app.use((req, res, next) => {
 app.use('/api/news', HomeNewsRoutes); // Keep your existing news routes
 app.use('/api/auth', authRoutes);     // <-- ADD the authentication routes
 app.use('/api/likes',LikeRoutes);
+app.use('/api/theories', TheoryRoutes);
+app.use('/api/interests', interestsRoutes); // Add interests routes
+app.use('/api/polls', pollRoutes);
 
 // Basic root route (keep existing)
 app.get('/', (req, res) => {

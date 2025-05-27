@@ -1,0 +1,220 @@
+/* frontend/src/pages/Forms.css */
+.form-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: rgba(40, 40, 40, 0.8); /* Dark semi-transparent */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+  }
+  
+  .form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #fff;
+  }
+  
+  .context-url {
+    font-size: 0.9em;
+    color: #ccc;
+    margin-bottom: 20px;
+    word-break: break-all;
+  }
+  .context-url a {
+    color: #64b5f6; /* Light blue link */
+    text-decoration: none;
+  }
+  .context-url a:hover {
+    text-decoration: underline;
+  }
+  
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #333;
+    color: #e0e0e0;
+    font-size: 1rem;
+    min-height: 150px;
+    resize: vertical;
+  }
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+  
+  .submit-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .submit-button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  .submit-button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+  }
+  
+  .error-message {
+    color: #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.1);
+    border: 1px solid #ff4d4d;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .success-message {
+     color: #4caf50;
+     background-color: rgba(76, 175, 80, 0.1);
+     border: 1px solid #4caf50;
+     padding: 10px;
+     border-radius: 4px;
+     margin-bottom: 15px;
+     text-align: center;
+  }
+
+/* Frontend/src/Components/WriteTheory.css */
+
+.write-theory-page {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 0 1rem; /* Padding on sides */
+    color: #0f1419; /* Twitter default text */
+}
+
+.write-theory-page h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1.5rem;
+}
+
+.context-article-link {
+    display: block;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.context-article-link span {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.context-article-link a {
+    color: #1d9bf0; /* Twitter blue */
+    text-decoration: none;
+    word-break: break-all;
+}
+.context-article-link a:hover {
+    text-decoration: underline;
+}
+
+.write-theory-form {
+    /* Form container */
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group textarea {
+    width: 100%;
+    min-height: 150px; /* Decent starting height */
+    padding: 0.75rem;
+    border: 1px solid #cfd9de;
+    border-radius: 8px;
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.form-group textarea:focus {
+    border-color: #1d9bf0;
+    outline: none;
+    box-shadow: 0 0 0 1px #1d9bf0;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end; /* Align button to right */
+    margin-top: 1rem;
+}
+
+.submit-theory-button {
+    padding: 0.6rem 1.5rem;
+    background-color: #1d9bf0;
+    color: white;
+    border: none;
+    border-radius: 999px; /* Pill shape */
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-theory-button:hover:not(:disabled) {
+    background-color: #1a8cd8;
+}
+
+.submit-theory-button:disabled {
+    background-color: #a0d2f7;
+    cursor: not-allowed;
+}
+
+/* Message styles */
+.form-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.form-message.success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border: 1px solid #badbcc;
+}
+
+.form-message.error {
+    color: #842029;
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+}

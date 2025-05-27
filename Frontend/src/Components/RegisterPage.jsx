@@ -1,6 +1,7 @@
 // frontend/src/components/RegisterPage.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './AuthCommon.css';
 // Add CSS import: import './RegisterPage.css';
 
@@ -8,10 +9,12 @@ const API_URL = 'http://localhost:5000/api/auth'; // Or similar // Your backend 
 
 function RegisterPage() {
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState(''); // To display success/error
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent page reload
@@ -22,21 +25,19 @@ function RegisterPage() {
             const response = await fetch(`${API_URL}/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ username, email, password }),
             });
 
             const data = await response.json(); // Always parse JSON response
 
-            setMessage(data.message); // Display message from backend
-
-            if (response.ok) { // Check if registration was successful (status 2xx)
-                console.log('Registration successful');
-                navigate('/login');
-                setUsername(''); // Optionally clear form on success
-                setPassword('');
-                // Maybe redirect to login page after a delay
+            if (response.ok) {
+                setMessage(data.message);
+                // Store token and user info using the auth context
+                login(data.token, data.user);
+                // Navigate to interests page
+                navigate('/interests');
             } else {
-                console.error('Registration failed');
+                setMessage(data.message || 'Registration failed');
             }
 
         } catch (error) {
@@ -63,6 +64,17 @@ function RegisterPage() {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="reg-email">Email:</label>
+                    <input
+                        type="email"
+                        id="reg-email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        disabled={isLoading}
+                    />
+                </div>
+                <div className="form-group">
                     <label htmlFor="reg-password">Password:</label>
                     <input
                         type="password"
@@ -79,7 +91,9 @@ function RegisterPage() {
                 </button>
             </form>
             {message && <p className={`message ${message.includes('successfully') ? 'success' : 'error'}`}>{message}</p>}
-            {/* Add Link to Login Page */}
+            <div className="auth-switch-link">
+                Already have an account? <Link to="/login">Login here</Link>
+            </div>
         </div>
     );
 }

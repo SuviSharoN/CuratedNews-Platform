@@ -1,0 +1,330 @@
+/* frontend/src/pages/ViewTheories.css */
+
+/* --- Main Page Container --- */
+.view-theories-page {
+    max-width: 700px; /* Twitter-like width */
+    margin: 1rem auto; 
+    padding: 0 1rem; /* Padding on sides */
+    color: #0f1419; /* Twitter default text */
+    background-color: #fff; /* Standard background */
+  }
+  
+/* --- Context Area (Article Link) --- */
+  .context-link-area {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .context-link-area span {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .context-link-area a {
+    color: #1d9bf0; /* Twitter blue */
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .context-link-area a:hover {
+    text-decoration: underline;
+  }
+  
+  .write-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.5rem 1rem;
+    background-color: #052942;
+    color: rgb(182, 146, 146);
+    border-radius: 999px; /* Pill shape */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+  .write-link:hover {
+    background-color: #000000;
+    text-decoration: none;
+}
+
+/* --- Page Header --- */
+.view-theories-page h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1rem;
+  }
+  
+/* --- Loading/Error/No Results --- */
+  .loading-message, .error-message, .no-theories-message {
+    text-align: center;
+    padding: 2rem;
+    color: #555;
+  }
+  .error-message {
+    color: #f4212e;
+}
+
+/* --- Theories List --- */
+  .theories-list {
+    /* No specific styles needed, acts as container */
+  }
+  
+/* --- Theory Thread Item (Container for Post + Replies) --- */
+.theory-thread-item {
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0;
+}
+.theory-thread-item:last-child {
+    border-bottom: none;
+}
+
+/* --- Main Theory Post Styling --- */
+.theory-post {
+    display: flex;
+    gap: 0.75rem; /* Space between avatar and content */
+}
+
+.theory-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.theory-content-main {
+    flex-grow: 1;
+}
+
+.theory-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .theory-author {
+    font-weight: 700;
+    color: #0f1419;
+  }
+.theory-author:hover {
+    text-decoration: underline;
+}
+  
+  .theory-date {
+    font-size: 0.9rem;
+    color: #536471;
+}
+
+.theory-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.theory-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #0f1419;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-bottom: 0.75rem;
+}
+
+/* --- Reply Button (under main theory) --- */
+.toggle-reply-btn {
+    background: none;
+    border: none;
+    color: #1d9bf0;
+    cursor: pointer;
+    padding: 0.25rem 0;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+.toggle-reply-btn:hover {
+    text-decoration: underline;
+  }
+  
+/* --- Reply Form Area --- */
+.reply-form-container {
+    padding-left: calc(40px + 0.75rem); /* Indent to align with content */
+    margin-top: 0.75rem;
+}
+
+.reply-form {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+}
+
+.reply-form-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin-top: 0.5rem; /* Align roughly with textarea */
+}
+
+.reply-form textarea {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border: 1px solid #cfd9de;
+    border-radius: 6px;
+    resize: vertical;
+    min-height: 50px;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+.reply-form textarea:focus {
+    border-color: #1d9bf0;
+    outline: none;
+    box-shadow: 0 0 0 1px #1d9bf0;
+}
+
+.submit-reply-btn {
+    align-self: flex-end;
+    padding: 0.5rem 1rem;
+    background-color: #1d9bf0;
+    color: white;
+    border: none;
+    border-radius: 999px; /* Pill shape */
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    margin-bottom: 0; /* Align with bottom of textarea */
+}
+.submit-reply-btn:hover:not(:disabled) {
+    background-color: #1a8cd8;
+}
+.submit-reply-btn:disabled {
+    background-color: #a0d2f7;
+    cursor: not-allowed;
+}
+
+/* --- Replies List --- */
+.replies-list {
+    margin-top: 1rem;
+    padding-left: calc(40px + 0.75rem); /* Indent replies under main theory */
+    /* Optional: add connecting line */
+    position: relative;
+    /* border-left: 2px solid #cfd9de; */ /* Example line */
+    /* margin-left: calc(40px / 2); */ /* Center line on avatar */
+    /* padding-left: calc(0.75rem + 40px / 2); */
+}
+
+/* --- Individual Reply Item --- */
+.reply-item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem 0; /* Vertical padding only */
+}
+
+.reply-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.reply-content {
+    flex-grow: 1;
+}
+
+.reply-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.1rem;
+}
+
+.reply-author {
+    font-weight: 700;
+    color: #0f1419;
+}
+.reply-author:hover {
+    text-decoration: underline;
+}
+
+.reply-date {
+    font-size: 0.85rem;
+    color: #536471;
+}
+
+.reply-text {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #0f1419;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* --- START Vote Controls Styling --- */
+.vote-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Spacing between buttons and score */
+    margin-top: 0.5rem; /* Space above the controls */
+    font-size: 0.9rem;
+    color: #536471; /* Muted color for score */
+  }
+  
+.vote-btn {
+    background: none;
+    border: none;
+    padding: 0.1rem 0.3rem;
+    cursor: pointer;
+    font-size: 1.1rem; /* Make arrows slightly larger */
+    line-height: 1;
+    color: #657786; /* Default arrow color */
+    border-radius: 4px; 
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.vote-btn:hover:not(:disabled) {
+    background-color: #f5f8fa; /* Light background on hover */
+    color: #1d9bf0; /* Blue on hover */
+}
+
+.vote-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.vote-btn.upvote.active {
+    color: #17bf63; /* Green for active upvote */
+    font-weight: bold;
+}
+
+.vote-btn.downvote.active {
+    color: #e0245e; /* Red/Pink for active downvote */
+    font-weight: bold;
+}
+
+.vote-score {
+    font-weight: 600;
+    min-width: 1.5em; /* Ensure space for score */
+    text-align: center;
+    color: #0f1419; /* Darker score text */
+}
+
+/* Adjust placement relative to Reply button */
+.theory-content-main .vote-controls {
+    margin-bottom: 0.5rem; /* Add space below theory votes before reply button */
+}
+.theory-content-main .vote-controls .toggle-reply-btn {
+    margin-left: auto; /* Push reply button to the right */
+}
+
+.reply-content .vote-controls {
+     margin-top: 0.25rem; /* Less space needed for replies */
+}
+/* --- END Vote Controls Styling --- */

@@ -5,105 +5,91 @@ import LikedNews from '../Models/LikedNewsModel.js';
 /**
  * @desc    Toggle like/unlike status for an article by the logged-in user.
  * @route   POST /api/likes/toggle
- * @access  Private (Requires 'protect' and 'checkLikeStatus' middleware)
+ * @access  Private (Requires authentication middleware like 'authenticateToken')
  */
 export const toggleLike = async (req, res) => {
-    // --- Information provided by preceding middleware ---
-    const userId = req.user._id; // From 'protect'
-    const existingLike = req.existingLike; // From 'checkLikeStatus'
-    // --- ------------------------------------------- ---
-
+    const userId = req.user._id; // From authentication middleware
     const { url: articleUrl, title, description, sourceName, urlToImage, publishedAt } = req.body;
 
-    // Basic validation for articleUrl already done in middleware, but keep defensive checks if needed.
-    // if (!articleUrl) { ... } // Likely redundant now
+    if (!articleUrl) {
+        return res.status(400).json({ success: false, message: 'Article URL is required.' });
+    }
 
     try {
-        let likedByUser = false;
+        // 1. Ensure the article exists in LikedNews (Upsert)
+        // We do this first to ensure the article details are saved regardless of like state.
+        const newsArticle = await LikedNews.findOneAndUpdate(
+            { url: articleUrl },
+            {
+                $setOnInsert: {
+                    url: articleUrl,
+                    title: title || "Title Not Provided",
+                    description: description || null,
+                    sourceName: sourceName || null,
+                    urlToImage: urlToImage || null,
+                    publishedAt: publishedAt ? new Date(publishedAt) : null,
+                    firstSeenAt: new Date()
+                }
+            },
+            { upsert: true, new: true } // Return the document, create if doesn't exist
+        );
 
-        // Use the info from the middleware instead of querying again
+        // 2. Check the *current* like status for this user and article
+        // This tells us whether we need to add or remove the like.
+        const existingLike = await Like.findOne({ userId, articleUrl });
+
+        let updateOperation;
         if (existingLike) {
-            // --- UNLIKE ---
-            // existingLike._id refers to the ID of the 'Like' document itself
-            await Like.deleteOne({ _id: existingLike._id });
-            likedByUser = false;
-            // console.log(`[Toggle Like] User ${userId} unliked article via middleware check: ${articleUrl}`);
-
+            // --- User currently LIKES it -> UNLIKE --- 
+            updateOperation = Like.deleteOne({ _id: existingLike._id });
         } else {
-            // --- LIKE ---
-            if (!title) {
-                console.warn(`[Toggle Like] Liking article without title: ${articleUrl}. Ensure frontend sends title.`);
-                 // Consider stricter validation if necessary for LikedNews
-            }
-            await Like.create({ userId, articleUrl });
-            likedByUser = true;
-            // console.log(`[Toggle Like] User ${userId} liked article via middleware check: ${articleUrl}`);
-
-            // Ensure article details are saved in LikedNews (only if it doesn't exist)
-            // This logic remains the same
-            await LikedNews.findOneAndUpdate(
-                { url: articleUrl },
-                {
-                    $setOnInsert: {
-                        url: articleUrl,
-                        title: title || "Title Not Provided",
-                        description: description || null,
-                        sourceName: sourceName || null,
-                        urlToImage: urlToImage || null,
-                        publishedAt: publishedAt ? new Date(publishedAt) : null,
-                        firstSeenAt: new Date()
-                    }
-                },
-                { upsert: true }
-            );
-            // console.log(`[Toggle Like] Ensured LikedNews entry exists for: ${articleUrl}`);
+            // --- User currently does NOT like it -> LIKE --- 
+            // Use findOneAndUpdate with upsert for Likes as well, to handle potential races 
+            // though direct create is also reasonable if races are unlikely.
+            // Using create here for simplicity as unlike is handled above.
+            updateOperation = Like.create({ userId, articleUrl });
         }
 
-        // Get the NEW total like count for this specific article
-        const newLikeCount = await Like.countDocuments({ articleUrl });
+        // 3. Perform the like/unlike operation
+        await updateOperation;
 
-        // Respond
+        // 4. Get the final state AFTER the operation
+        const finalLikeCount = await Like.countDocuments({ articleUrl });
+        const userNowLikes = await Like.exists({ userId, articleUrl }); // Check if the like exists *now*
+
+        // Respond with the final, definitive state
         res.status(200).json({
             success: true,
-            message: likedByUser ? 'Article liked.' : 'Article unliked.',
+            message: userNowLikes ? 'Article liked.' : 'Article unliked.',
             data: {
-                likedByUser: likedByUser,
-                likeCount: newLikeCount
+                likedByUser: !!userNowLikes, // Convert null/doc to boolean
+                likeCount: finalLikeCount
             }
         });
 
     } catch (error) {
         console.error(`[Toggle Like Controller] Error for user ${userId}, article ${articleUrl}:`, error);
-        // Handle potential duplicate key error on Like.create if middleware somehow misses a race condition
-        if (error.code === 11000) {
-            return res.status(409).json({ success: false, message: 'Conflict: Like status may have changed concurrently.' });
-        }
+        // Generic error, as the logic should prevent conflicts now
         res.status(500).json({ success: false, message: 'Server error processing like request.' });
     }
 };
 
 // --- getBatchLikeStatusAndCounts remains the same as it needs the userId anyway ---
 export const getBatchLikeStatusAndCounts = async (req, res) => {
-    // ... (Keep the previous implementation for getBatchLikeStatusAndCounts)
     const userId = req.user?._id;
     if (!userId) {
         return res.status(401).json({ success: false, message: 'Not authorized.' });
     }
-    // ... rest of the function
-     const { urls: articleUrls } = req.body;
+    const { urls: articleUrls } = req.body;
     if (!articleUrls || !Array.isArray(articleUrls) || articleUrls.length === 0) {
         return res.status(400).json({ success: false, message: 'Please provide a non-empty array of URLs.' });
     }
-
     try {
-        // Find which articles the CURRENT user has liked
         const userLikes = await Like.find({
             userId,
             articleUrl: { $in: articleUrls }
         }).select('articleUrl -_id');
         const userLikedUrlsSet = new Set(userLikes.map(like => like.articleUrl));
-
-        // Get total like counts for ALL articles using Aggregation
         const totalCountsResult = await Like.aggregate([
             { $match: { articleUrl: { $in: articleUrls } } },
             { $group: { _id: '$articleUrl', count: { $sum: 1 } } }
@@ -112,8 +98,6 @@ export const getBatchLikeStatusAndCounts = async (req, res) => {
             map[item._id] = item.count;
             return map;
         }, {});
-
-        // Combine results
         const responseData = articleUrls.reduce((map, url) => {
             map[url] = {
                 likedByUser: userLikedUrlsSet.has(url),
@@ -121,11 +105,46 @@ export const getBatchLikeStatusAndCounts = async (req, res) => {
             };
             return map;
         }, {});
-
         res.status(200).json({ success: true, data: responseData });
-
     } catch (error) {
         console.error(`[Batch Likes] Error fetching status for user ${userId}:`, error);
         res.status(500).json({ success: false, message: 'Server error fetching like status.' });
     }
 }; // End of getBatchLikeStatusAndCounts
+
+/**
+ * @desc    Get all articles liked by the currently authenticated user
+ * @route   GET /api/likes/user
+ * @access  Private (Requires 'protect' middleware)
+ */
+export const getUserLikedArticles = async (req, res) => {
+    const userId = req.user._id; // Get user ID from token (added by protect middleware)
+
+    try {
+        // 1. Find all 'Like' documents created by this user
+        const userLikes = await Like.find({ userId: userId }).select('articleUrl -_id'); // Select only the articleUrl
+
+        if (!userLikes || userLikes.length === 0) {
+            // If the user hasn't liked anything
+            return res.status(200).json({ success: true, data: [] });
+        }
+
+        // 2. Extract the URLs of the liked articles
+        const likedUrls = userLikes.map(like => like.articleUrl);
+
+        // 3. Find all the full article details from LikedNews collection based on the URLs
+        //    Sort by publishedAt descending to show newest first (optional)
+        const likedArticleDetails = await LikedNews.find({ url: { $in: likedUrls } })
+                                                 .sort({ publishedAt: -1 }); // Optional sort
+
+        // 4. Return the array of full article details
+        res.status(200).json({
+            success: true,
+            data: likedArticleDetails
+        });
+
+    } catch (error) {
+        console.error(`[Get User Likes] Error fetching liked articles for user ${userId}:`, error);
+        res.status(500).json({ success: false, message: 'Server error fetching liked articles.' });
+    }
+};

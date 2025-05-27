@@ -1,0 +1,1 @@
+// Removed pollRoutes import and app.use('/api/polls', pollRoutes) 
