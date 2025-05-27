@@ -1,0 +1,97 @@
+.interests-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.interests-container h1 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+}
+
+.bubbles-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 2rem 0;
+}
+
+.interest-bubble {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  background: white;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  animation: float 6s ease-in-out infinite;
+}
+
+.interest-bubble:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.interest-bubble.selected {
+  background: #3498db;
+  color: white;
+  transform: scale(1.1);
+}
+
+.submit-btn {
+  margin-top: 2rem;
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 50px;
+  background: #2ecc71;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #27ae60;
+  transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Add different animation delays for each bubble */
+.interest-bubble:nth-child(1) { animation-delay: 0s; }
+.interest-bubble:nth-child(2) { animation-delay: 0.2s; }
+.interest-bubble:nth-child(3) { animation-delay: 0.4s; }
+.interest-bubble:nth-child(4) { animation-delay: 0.6s; }
+.interest-bubble:nth-child(5) { animation-delay: 0.8s; }
+.interest-bubble:nth-child(6) { animation-delay: 1s; }
+.interest-bubble:nth-child(7) { animation-delay: 1.2s; }
+.interest-bubble:nth-child(8) { animation-delay: 1.4s; }
+.interest-bubble:nth-child(9) { animation-delay: 1.6s; }
+.interest-bubble:nth-child(10) { animation-delay: 1.8s; } 

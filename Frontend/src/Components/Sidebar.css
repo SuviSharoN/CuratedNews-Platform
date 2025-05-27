@@ -1,0 +1,179 @@
+/* src/components/Sidebar.css */
+
+:root {
+    --sidebar-width: 250px; /* Define sidebar width */
+    --sidebar-transition-speed: 0.3s; /* Define transition speed */
+  }
+  
+  /* --- Overall Page Wrapper --- */
+  .news-page-wrapper {
+    position: relative;
+    overflow-x: hidden; /* Prevent horizontal scrollbars during transition */
+    min-height: 100vh;
+  }
+  
+  /* --- Sidebar Toggle Button --- */
+  .sidebar-toggle-button {
+    position: absolute; /* Position relative to wrapper, moves with content */
+    top: 15px;
+    left: 15px;
+    z-index: 1050; /* Above sidebar and overlay */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    /* Transition the left property for smooth movement */
+    transition: left var(--sidebar-transition-speed) ease-in-out, background-color 0.2s ease;
+  }
+  .sidebar-toggle-button:hover {
+      background-color: #f0f0f0;
+  }
+  .sidebar-toggle-button svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+  }
+  
+  /* --- Sidebar (Remains Fixed to Viewport) --- */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: calc(-1 * var(--sidebar-width)); /* Start off-screen */
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    padding: 20px 0; /* Vertical padding */
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    transition: left var(--sidebar-transition-speed) ease-in-out;
+    z-index: 1040; /* Below toggle button, above content */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar.open {
+    left: 0; /* Slide in */
+  }
+  
+  /* --- Main Content Area (Header, Main, Footer Wrapper) --- */
+  .main-content-area {
+    /* Transition the margin-left property */
+    transition: margin-left var(--sidebar-transition-speed) ease-in-out;
+    margin-left: 0; /* Default state (no margin) */
+    padding-top: 60px; /* Adjust based on toggle button height/position */
+    position: relative;
+    background-color: #1a1a1a; /* <<< ADD THIS LINE (change #1a1a1a to your preferred dark color) */
+    min-height: calc(100vh - 60px); /* Fill height below padding */
+  }
+  
+  /* --- Styles Applied When Sidebar is Open --- */
+  /* When the wrapper has .sidebar-open */
+  .news-page-wrapper.sidebar-open .main-content-area {
+    margin-left: var(--sidebar-width); /* Push content over by sidebar width */
+  }
+  /* Also move the toggle button */
+  .news-page-wrapper.sidebar-open .sidebar-toggle-button {
+    left: calc(var(--sidebar-width) + 15px); /* Sidebar width + original offset */
+  }
+  
+  
+  /* --- Sidebar Content Styles (Refined) --- */
+  .sidebar-title {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+      color: #343a40;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 10px;
+      padding-left: 20px;  /* Padding inside sidebar */
+      padding-right: 20px; /* Padding inside sidebar */
+  }
+  .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex-grow: 1;
+  }
+  .sidebar li {
+      margin: 0;
+  }
+  .category-button {
+      background: none;
+      border: none;
+      padding: 12px 20px; /* Spacing */
+      width: 100%;
+      box-sizing: border-box;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1rem;
+      color: #212529;
+      border-radius: 0;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      display: block;
+      border-bottom: 1px solid #f0f0f0; /* Separator */
+  }
+  .sidebar li:last-child .category-button {
+      border-bottom: none;
+  }
+  .category-button:hover {
+      background-color: #e9ecef;
+      color: #0056b3;
+  }
+  .category-button.active {
+      background-color: #007bff;
+      color: white;
+      font-weight: 600;
+       /* Optional active indicator */
+       border-left: 4px solid #0056b3;
+       padding-left: 16px; /* Adjust padding for border */
+  }
+  .sidebar-close-button {
+      margin: 20px; /* Space around button */
+      padding: 8px 15px;
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      align-self: flex-start;
+      font-size: 0.9rem;
+  }
+  .sidebar-close-button:hover{
+      background-color: #5a6268;
+  }
+  
+  /* --- Optional Overlay --- */
+  .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1030; /* Below sidebar, above content */
+      display: none;
+  }
+  .sidebar.open + .sidebar-overlay { /* Show overlay when sidebar is open */
+      display: block;
+  }
+  
+  /* --- Media Queries --- */
+  @media (max-width: 768px) {
+      :root {
+        --sidebar-width: 220px; /* Adjust sidebar width for smaller screens */
+      }
+      .main-content-area {
+          padding-top: 55px; /* May need slight adjustment */
+      }
+      /* Toggle button position might need adjustment if header layout changes drastically */
+       .sidebar-toggle-button {
+          top: 12px;
+          left: 12px;
+          padding: 6px;
+      }
+       .news-page-wrapper.sidebar-open .sidebar-toggle-button {
+          left: calc(var(--sidebar-width) + 12px);
+       }
+  }
