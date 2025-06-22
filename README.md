@@ -1,2 +1,2 @@
 # CuratedNews-Platform
-FST Mini Project - Curated News Providing Platform
+ Curated News Providing Platform
