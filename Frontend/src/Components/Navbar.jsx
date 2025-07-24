@@ -21,7 +21,7 @@ function Navbar() {
       <div className="navbar-content">
         {/* Brand Link: Point to /home if logged in, otherwise /login (or /) */}
         <Link to={isLoggedIn ? "/top-headlines" : "/login"} className="navbar-brand">
-          Curated News Platform
+          NewsNexus
         </Link>
 
         {/* Navigation Links */}
